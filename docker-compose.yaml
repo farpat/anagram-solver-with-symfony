@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    nginx:
+        build: ./docker/nginx
+        ports:
+            - 8080:80
+        volumes:
+            - .:/var/www/app
+            - ./docker/nginx/sites-enabled:/etc/nginx/sites-enabled
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - php
+    php:
+        build: ./docker/php
+        volumes:
+            - .:/var/www/app
+            - ~/.cache/composer:/.cache/composer
+        working_dir: /var/www/app
+    webpack_dev_server:
+        build: ./docker/node
+        ports:
+            - 3000:3000
+        volumes:
+            - .:/var/www/app
+        working_dir: /var/www/app
+        command: npm run dev

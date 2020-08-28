@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Anagram Solver' %}
+
+{% block body %}
+    <main class="container">
+        <div class="bg-light rounded-lg my-5 p-3">
+            <h1 class="">Anagram solver</h1>
+            <hr>
+            <p class="lead">
+                Select a file and click on submit to visualize results.
+            </p>
+        </div>
+
+        <form class="row align-items-center" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('home') }}">
+
+            <div class="col-auto mr-3">
+                <input type="file" name="file" id="file" accept="text/plain">
+            </div>
+            <button class="col-auto btn btn-primary btn-xl">Submit</button>
+        </form>
+
+        {% if results is not empty %}
+            <ul class="mt-5">
+                {% for result in results %}
+                    <li>{{ result }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </main>
+{% endblock %}
